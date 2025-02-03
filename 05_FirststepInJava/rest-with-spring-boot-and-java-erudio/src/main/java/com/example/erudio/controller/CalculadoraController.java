@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.erudio.exceptions.UnsupportedMathOperationException;
+
 @RestController
 @RequestMapping("/calculadora")
 public class CalculadoraController {
@@ -13,7 +15,7 @@ public class CalculadoraController {
 	public double soma(@PathVariable String numeroUm, @PathVariable String numeroDois) throws Exception{
 		
 		if(!isNumeric(numeroUm) || !isNumeric(numeroDois)) {
-			throw new Exception();
+			throw new UnsupportedMathOperationException("Por favor, coloque um número");
 		}
 		
 		return convertToDouble(numeroUm) + convertToDouble(numeroDois);
