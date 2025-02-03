@@ -10,7 +10,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculadoraController {
 
 	@GetMapping("/soma/{numeroUm}/{numeroDois}")
-	public double soma(@PathVariable String numeroUm, @PathVariable String numeroDois) {
-		return 1D;
+	public double soma(@PathVariable String numeroUm, @PathVariable String numeroDois) throws Exception{
+		
+		if(!isNumeric(numeroUm) || !isNumeric(numeroDois)) {
+			throw new Exception();
+		}
+		
+		return convertToDouble(numeroUm) + convertToDouble(numeroDois);
+	}
+
+	private double convertToDouble(String strNumero) {
+		if(strNumero == null) return 0D;
+		String numero = strNumero.replace(",",".");
+		if(isNumeric(numero)) return Double.parseDouble(numero);
+		return 0D;
+		
+	}
+
+	private boolean isNumeric(String strNumero) {
+		if(strNumero == null) return false;
+		String numero = strNumero.replace(",", ".");
+		return numero.matches("[-+]?[0-9]*\\.?[0-9]+");
 	}
 }
